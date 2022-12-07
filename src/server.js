@@ -42,28 +42,28 @@ function soloAdmins(req, res, next) {
 
 //funciones productos 
 
-export const getProducts = async (req, res) => {
+const getProducts = async (req, res) => {
     const productos = await productosApi.listarAll()
     res.json(productos)
 }
 
 
-export const getProductById = async (req, res) => {
+const getProductById = async (req, res) => {
     res.json(await productosApi.listar(req.params.id))
 }
 
 
-export const addProduct = async (req, res) => {
+const addProduct = async (req, res) => {
     res.json({ id: await productosApi.guardar(req.body) })
 }
 
 
-export const updateProducts = async (req, res) => {
+const updateProducts = async (req, res) => {
     res.json(await productosApi.actualizar(req.body, req.params.id))
 }
 
 
-export const deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res) => {
     res.json(await productosApi.borrar(req.params.id))
 }
 
@@ -83,26 +83,26 @@ productosRouter.delete('/:id', soloAdmins, deleteProduct)
 //funciones carrito
 
 
-export const getCart = async (req, res) => {
+const getCart = async (req, res) => {
     res.json((await carritosApi.listarAll()).map(c => c.id))
 }
 
-export const newProduct = async (req, res) => {
+const newProduct = async (req, res) => {
     res.json({ id: await carritosApi.guardar({ productos: [] }) })
 }
 
-export const deleteCart = async (req, res) => {
+const deleteCart = async (req, res) => {
     res.json(await carritosApi.borrar(req.params.id))
 }
 
 
-export const getProductFromCart = async (req, res) => {
+const getProductFromCart = async (req, res) => {
     const carrito = await carritosApi.listar(req.params.id)
     res.json(carrito.productos)
 }
 
 
-export const addProductToCart = async (req, res) => {
+const addProductToCart = async (req, res) => {
     const carrito = await carritosApi.listar(req.params.id)
     const producto = await productosApi.listar(req.body.id)
     carrito.productos.push(producto)
@@ -111,7 +111,7 @@ export const addProductToCart = async (req, res) => {
 }
 
 
-export const deteleProductFromCart = async (req, res) => {
+const deteleProductFromCart = async (req, res) => {
     const carrito = await carritosApi.listar(req.params.id)
     const index = carrito.productos.findIndex(p => p.id == req.params.idProd)
     if (index != -1) {
